@@ -1,0 +1,72 @@
+﻿@model IEnumerable<BookShop.Models.Book>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Books For Sale</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.AuthorFirstName)*@
+                Author
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.AuthorLastName)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.ISBN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AuthorFirstName) @Html.DisplayFor(modelItem => item.AuthorLastName)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.AuthorLastName)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.ISBN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @*<a asp-action="Edit" asp-route-id="@item.BookId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.BookId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.BookId">Delete</a> |
+                <a asp-action="AddToCart" asp-route-id="item.BookId">AddToCart</a>*@
+                <p class="button ">
+                    <a class="btn btn-success" id="cartButton" asp-controller="StoreCart" asp-action="AddToCart" asp-route-bookId="@item.BookId">
+                        Add to cart
+                    </a>
+                </p>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

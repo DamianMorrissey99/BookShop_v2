@@ -1,0 +1,21 @@
+﻿@Model BookShop.Models.StoreCartViewModel
+
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Identity.EntityFrameworkCore
+@inject SignInManager<IdentityUser> SignInManager
+
+@if (Model.StoreCart.StoreCartItems != null)
+{
+    @if (Model.StoreCart.StoreCartItems.Count > 0 && SignInManager.IsSignedIn(User))
+    {
+        <li>
+            <a asp-controller="StoreCart">
+                <span class="glyphicon glyphicon-shopping-cart"></span>
+                <span id="cart-status">
+                    @Model.StoreCart.StoreCartItems.Count
+                </span>
+            </a>
+        </li>
+    }
+}
+
