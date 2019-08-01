@@ -13,9 +13,10 @@
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
               crossorigin="anonymous"
-              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"/>
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
+    <script type="text/javascript" src="https://cdn-eu.trustev.com/trustev.min.js"></script>
 </head>
 <body>
     <header>
@@ -73,8 +74,14 @@
                 crossorigin="anonymous"
                 integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
         </script>
+
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        TrustevV2.Init('1916e0cd7ad540dd91d58ee5d69f660c', function (sessionId) {
+            console.log('SessionId: ' + sessionId);
+        });
+    </script>
 
     @RenderSection("Scripts", required: false)
 </body>

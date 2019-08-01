@@ -7,23 +7,6 @@ namespace BookShop.Models
 {
     public class Order
     {
-      
-
-        [Required]
-        public virtual IEnumerable<OrderBooks> OrderBooksId { get; set; }
-
-        [Required]
-        public virtual User UserOrdering { get; set; }
-
-        [Required]
-        public DateTime OrderDate { get; set; }
-
-        public bool OrderInCart { get; set; }
-
-        public bool OrderComplete { get; set; }
-
-
-
         [BindNever]
         public int OrderId { get; set; }
 
@@ -73,10 +56,11 @@ namespace BookShop.Models
 
         [BindNever]
         [ScaffoldColumn(false)]
+        [DataType(DataType.Currency) ]
         public decimal OrderTotal { get; set; }
 
         [BindNever]
         [ScaffoldColumn(false)]
-        public DateTime OrderPlaced { get; set; }
+        public DateTime OrderPlacedDate { get; set; }
     }
 }

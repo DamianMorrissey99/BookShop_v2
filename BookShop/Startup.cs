@@ -16,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using BookShop.Models;
 using BookShop.Models.Interfaces;
 using BookShop.Repositories;
+using BookShop.Interfaces;
 
 namespace BookShop
 {
@@ -46,6 +47,7 @@ namespace BookShop
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddTransient<IBook, BookRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped(sp => StoreCart.GetCart(sp));
 
