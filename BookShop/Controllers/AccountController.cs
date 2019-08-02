@@ -13,13 +13,13 @@ namespace BookShop.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> userManager;
-        private readonly SignInManager<IdentityUser> signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
         public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
+            this._userManager = userManager;
+            this._signInManager = signInManager;
         }
         // GET: Account
         [HttpGet]
@@ -35,11 +35,11 @@ namespace BookShop.Controllers
             if (ModelState.IsValid)
             {
                 var user = new IdentityUser { UserName = model.Email, Email = model.Email };
-                var result = await userManager.CreateAsync(user, model.Password);
+                var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
-                    await signInManager.SignInAsync(user, isPersistent:false);
+                    await _signInManager.SignInAsync(user, isPersistent:false);
                     return RedirectToAction("index","home");                   
                 }
 
@@ -63,15 +63,42 @@ namespace BookShop.Controllers
             return View();
         }
 
+        public IActionResult Login(string returnUrl)
+        {
+            return View(new Login
+            {
+                ReturnUrl = returnUrl
+            });
+        }
+
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(string returnUrl = null)
+        public async Task<IActionResult> Login(Login login)
         {
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            ViewData["ReturnUrl"] = returnUrl;
-            return View();
+            if (!ModelState.IsValid)
+                return View(login);
+
+            var user = await _userManager.FindByNameAsync(login.Email);
+
+            if (user != null)
+            {
+                var result = await _signInManager.PasswordSignInAsync(user, login.Password, false, false);
+                if (result.Succeeded)
+                {
+                    if (string.IsNullOrEmpty(login.ReturnUrl))
+                        return RedirectToAction("Index", "Home");
+
+                    return Redirect(login.ReturnUrl);
+                }
+            }
+
+            ModelState.AddModelError("", "Username/password not found");
+            return View(login);
+
+
         }
 
         // POST: Account/Create

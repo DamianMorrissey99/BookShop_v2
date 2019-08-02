@@ -181,6 +181,18 @@ namespace BookStore.Controllers
             {
                 _orderRepository.CreateOrder(order);
                 _shoppingCart.EmptyCart();
+
+                // TO DO : not working ATM
+                //var result =  CheckTransUnionStatusAsync(order).Result;
+
+                //if (result)
+                //{
+                //    return RedirectToAction("CheckoutComplete");
+                //}
+                //else
+                //{
+                //    return RedirectToAction("CheckoutFailed");
+                //}
                 return RedirectToAction("CheckoutComplete");
             }
 
@@ -195,22 +207,48 @@ namespace BookStore.Controllers
             return View();
         }
 
-        private void CheckTransUnionStatus(Order order)
+        public IActionResult CheckoutFailed()
         {
-            ApiClient.SetUp(userName, password, secret, baseURL);
 
-            Case kase = new Case(sessionId, caseNumber);
+            ViewBag.CheckoutFailedMessage = "Your order cannot be completed at this time. Please contact your credit provider";
+            return View();
+        }
 
-            Customer customer = new Customer()
+        private async Task<bool> CheckTransUnionStatusAsync(Order order)
+        {         
+            //TO DO: add to configuration
+            ApiClient.SetUp("Tu-TestSite-test", "dc6647d7831948f88ac4e6436e67f178", "8a2407ba959f4c2cb8dd1fe5e9ee40a5", "EU");
+
+            // TO DO : Get the correct Session ID
+            string sessionId = HttpContext.Session.Id;
+
+            Guid newGuid = Guid.Parse(sessionId);
+
+            Random random = new Random();
+            string nextNumber = random.Next().ToString();
+
+            Case kase = new Case(newGuid, nextNumber);
+
+            kase.Customer = new Customer()
             {
-                FirstName = "John",
-                LastName = "Doe",
+                FirstName = order.FirstName,
+                LastName = order.LastName,
+                PhoneNumber = order.PhoneNumber
+
             };
 
-            Customer returnCustomer = ApiClient.PostCustomer(returnCase.Id, customer);
-
-            Decision decision = ApiClient.GetDecision(returnCase.Id);
-            decision.
+            Case returnCase = await ApiClient.PostCaseAsync(kase);
+                        
+            Decision decision = await ApiClient.GetDecisionAsync(returnCase.Id);    
+    
+            if (decision.Score == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
 
 
         }

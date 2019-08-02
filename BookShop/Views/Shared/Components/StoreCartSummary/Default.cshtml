@@ -10,7 +10,8 @@
     {
         <li>
             <a asp-controller="StoreCart">
-                <span class="glyphicon glyphicon-shopping-cart"></span>
+                @*<span class="glyphicon glyphicon-shopping-cart">Cart:</span>*@
+                <span>Cart: </span>
                 <span id="cart-status">
                     @Model.StoreCart.StoreCartItems.Count
                 </span>

@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Components\" />
-    <Folder Include="Views\Orders\" />
   </ItemGroup>
 
 </Project>
