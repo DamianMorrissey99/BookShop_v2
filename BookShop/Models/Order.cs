@@ -30,7 +30,7 @@ namespace BookShop.Models
         [Display(Name = "Address Line 2")]
         public string AddressLine2 { get; set; }
 
-        [Required(ErrorMessage = "Please enter your eircode")]
+        [Required(ErrorMessage ="Please enter an Eircode")]
         [Display(Name = "Eircode")]
         [StringLength(10, MinimumLength = 4)]
         public string Eircode { get; set; }

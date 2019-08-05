@@ -1,86 +1,96 @@
 ﻿@model Order
 
-    <div class="row orderForm ">
-        
-            <h3 class="text-center">Please enter your details below.</h3>
+@*@using  BookShop.Data;
 
-                <form asp-action="Checkout" method="post" class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label asp-for="LastName" class="col-md-2 control-label"></label>
-                        <div class="col-md-5">
-                            <input asp-for="LastName" class="form-control" />
-                            <span asp-validation-for="LastName" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="FirstName" class="col-md-2 control-label"></label>
-                        <div class="col-md-5">
-                            <input asp-for="FirstName" class="form-control" />
-                            <span asp-validation-for="FirstName" class="text-danger"></span>
-                        </div>
-                    </div>
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Identity.EntityFrameworkCore
 
-                    <div class="form-group">
-                        <label asp-for="AddressLine1" class="col-md-2 control-label"></label>
-                        <div class="col-md-5">
-                            <input asp-for="AddressLine1" class="form-control" />
-                            <span asp-validation-for="AddressLine1" class="text-danger"></span>
-                        </div>
-                    </div>
+@inject SignInManager<ApplicationUser> SignInManager
 
-                    <div class="form-group">
-                        <label asp-for="AddressLine2" class="col-md-2 control-label"></label>
-                        <div class="col-md-5">
-                            <input asp-for="AddressLine2" class="form-control" />
-                            <span asp-validation-for="AddressLine2" class="text-danger"></span>
-                        </div>
-                    </div>
+@SignInManager.UserManager. IsSignedIn(User))*@
 
-                    <div class="form-group">
-                        <label asp-for="Eircode" class="col-md-2 control-label"></label>
-                        <div class="col-md-5">
-                            <input asp-for="Eircode" class="form-control" />
-                            <span asp-validation-for="Eircode" class="text-danger"></span>
-                        </div>
-                    </div>
+    <h3 class="text-center">To complete your order please enter your details below.</h3>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Checkout" method="post" role="form">
 
-                    <div class="form-group">
-                        <label asp-for="County" class="col-md-2 control-label"></label>
-                        <div class="col-md-5">
-                            <input asp-for="County" class="form-control" />
-                            <span asp-validation-for="County" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="Country" class="col-md-2 control-label"></label>
-                        <div class="col-md-5">
-                            <input asp-for="Country" class="form-control" />
-                            <span asp-validation-for="Country" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="PhoneNumber" class="col-md-2 control-label"></label>
-                        <div class="col-md-5">
-                            <input asp-for="PhoneNumber" class="form-control" />
-                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="Email" class="col-md-2 control-label"></label>
-                        <div class="col-md-5">
-                            <input asp-for="Email" class="form-control" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="btn-group col-md-offset-2 col-md-8">
-                            <input class="btn btn-success" type="submit" value="Complete order" />
-                            @*<input class="btn btn-default" type="submit" value="Return " />*@
-                        </div>
-                    </div>
-
-                </form>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" value="@ViewBag.Firstname"  />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" value="@ViewBag.LastName" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="AddressLine1" class="control-label"></label>
+                <input asp-for="AddressLine1" class="form-control" value="@ViewBag.Address1" />
+                <span asp-validation-for="AddressLine1" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AddressLine2" class="control-label"></label>
+                <input asp-for="AddressLine2" class="form-control" value="@ViewBag.Address2" />
+                <span asp-validation-for="AddressLine2" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Eircode" class="control-label"></label>
+                <input asp-for="Eircode" class="form-control" value="@ViewBag.PostalCode" />
+                <span asp-validation-for="Eircode" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="County" class="control-label"></label>
+                <input asp-for="County" class="form-control" />
+                <span asp-validation-for="County" class="text-danger"></span>
+                
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Country" class="control-label"></label>
+                <input asp-for="Country" class="form-control" value="@ViewBag.Country" />
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" value="@ViewBag.PhoneNumber" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" value="@ViewBag.Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="btn-group col-md-offset-2 col-md-8">
+                    <input class="btn btn-success" type="submit" value="Complete order" />&emsp;
+                    <a class="btn btn-danger" asp-controller="Orders" asp-action="Delete">Cancel Order</a>
+                </div>
+                @*<div class="btn-group col-md-offset-2 col-md-8">
+                    <a class="btn btn-danger" asp-controller="Orders" asp-action="Delete">Cancel Order</a>
+                </div>*@
+
+                @*<ul class="navbar-expand">
+                    <li class="nav-item">
+                        <input class="btn btn-success" type="submit" value="Complete order" />
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-danger" asp-controller="Orders" asp-action="Delete">Cancel Order</a>
+                    </li>
+                </ul>*@
+
+
+            </div>
+
+        </form>
+    </div>
+</div>

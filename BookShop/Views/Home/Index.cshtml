@@ -1,8 +1,18 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@using  BookShop.Data;
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
 
 <div class="text-center">
-    <h1 class="display-4">Welcome To Damian's Book Shop</h1>
-    <p>Please login or register to get started!</p>
+    <h1 class="display-4">Welcome to Damian's Book Shop</h1>
+    @if (!SignInManager.IsSignedIn(User))
+    {
+        <p>Please login to begin to start shopping.</p>
+    }
+    <div class="container">
+        <img src="~/images/IMG_1290.JPG" alt="Books!" class="img-fluid" />
+    </div>
+
 </div>

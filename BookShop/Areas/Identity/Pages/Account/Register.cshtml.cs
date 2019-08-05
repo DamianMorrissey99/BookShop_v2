@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using BookShop.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -15,14 +16,14 @@ namespace BookShop.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -39,6 +40,34 @@ namespace BookShop.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+
+            [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
+            [Display(Name = "First Name")]
+            [Required(ErrorMessage = "First Name is required")]
+            public string FirstName { get; set; }
+
+            [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
+            [Display(Name = "Last Name")]
+            [Required(ErrorMessage = "Last Name is required")]
+            public string LastName { get; set; }
+
+            [Display(Name = "Address Line 1")]
+            [Required(ErrorMessage = "Address Line 1 is required")]
+            public string AddressLine1 { get; set; }
+
+            [Display(Name = "Address Line 2")]
+            public string AddressLine2 { get; set; }
+
+            [Required(ErrorMessage = "City is required")]
+            public string City { get; set; }
+
+            [Required(ErrorMessage = "Country is required")]
+            public string Country { get; set; }
+
+            [Display(Name = "Post Code")]
+            [DataType(DataType.PostalCode)]
+            public string PostCode { get; set; }
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -66,7 +95,17 @@ namespace BookShop.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser {
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName,
+                    AddressLine1 = Input.AddressLine1,
+                    AddressLine2 = Input.AddressLine2,
+                    City = Input.City,
+                    Country = Input.Country,
+                    PostCode = Input.PostCode};
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

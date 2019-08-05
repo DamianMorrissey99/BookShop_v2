@@ -1,8 +1,9 @@
-﻿@Model BookShop.Models.StoreCartViewModel
-
+﻿@model BookShop.Models.StoreCartViewModel
+@using  BookShop.Data;
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Identity.EntityFrameworkCore
-@inject SignInManager<IdentityUser> SignInManager
+
+@inject SignInManager<ApplicationUser> SignInManager
 
 @if (Model.StoreCart.StoreCartItems != null)
 {
