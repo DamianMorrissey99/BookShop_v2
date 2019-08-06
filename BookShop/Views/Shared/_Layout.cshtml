@@ -79,14 +79,14 @@
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
-    @*@section  scripts
+    @section  scripts
         {
         <script type="text/javascript">
             TrustevV2.Init('1916e0cd7ad540dd91d58ee5d69f660c', function (sessionId) {
                 console.log('SessionId: ' + sessionId);
             });
         </script>
-        }*@
+        }
     
     @RenderSection("Scripts", required: false)
 </body>
